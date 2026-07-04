@@ -1,0 +1,102 @@
+.admin-page {
+  min-height: calc(100vh - 64px);
+  padding: 40px 32px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.page-header { margin-bottom: 8px; }
+
+.page-title {
+  font-size: 1.5rem;
+  letter-spacing: 0.2em;
+  margin-bottom: 4px;
+}
+
+.page-sub {
+  color: #7a8aa0;
+  font-size: 0.875rem;
+}
+
+.warn-text {
+  color: #ffcc00;
+  font-size: 0.8rem;
+}
+
+.section-card { padding: 28px; }
+
+.section-heading {
+  font-size: 0.85rem;
+  letter-spacing: 0.2em;
+  margin-bottom: 24px;
+}
+
+/* ---- Form Grid ---- */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+
+  @media (max-width: 600px) { grid-template-columns: 1fr; }
+}
+
+.form-group {
+  &.full-span { grid-column: 1 / -1; }
+
+  label {
+    display: block;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: rgba(0,255,255,0.6);
+    margin-bottom: 6px;
+    font-family: 'Orbitron', sans-serif;
+    text-transform: uppercase;
+  }
+
+  textarea.sci-fi-input {
+    resize: vertical;
+    min-height: 80px;
+  }
+}
+
+/* ---- Table ---- */
+.table-wrap {
+  overflow-x: auto;
+}
+
+.action-cell {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.small-btn {
+  padding: 5px 12px;
+  font-size: 0.75rem;
+}
+
+.edit-row td {
+  padding: 8px 16px;
+  background: rgba(0,255,255,0.02);
+}
+
+.inline-input {
+  padding: 6px 10px;
+  font-size: 0.85rem;
+  min-width: 100px;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px;
+  color: #7a8aa0;
+  font-size: 0.875rem;
+}

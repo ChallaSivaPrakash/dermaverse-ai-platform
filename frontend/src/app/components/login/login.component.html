@@ -1,0 +1,41 @@
+<div class="auth-page">
+  <div class="auth-card glass-card">
+    <div class="auth-header">
+      <h1 class="neon-text">ACCESS PORTAL</h1>
+      <p>Enter your credentials to continue</p>
+    </div>
+
+    <div class="alert error" *ngIf="error">{{ error }}</div>
+
+    <div class="form-group">
+      <label>Email Address</label>
+      <input
+        class="sci-fi-input"
+        type="email"
+        placeholder="agent@example.com"
+        [(ngModel)]="email"
+        (keyup.enter)="submit()"
+      />
+    </div>
+
+    <div class="form-group">
+      <label>Password</label>
+      <input
+        class="sci-fi-input"
+        type="password"
+        placeholder="••••••••"
+        [(ngModel)]="password"
+        (keyup.enter)="submit()"
+      />
+    </div>
+
+    <button class="neon-btn full-width" (click)="submit()" [disabled]="loading">
+      <span *ngIf="!loading">AUTHENTICATE</span>
+      <span *ngIf="loading">AUTHENTICATING...</span>
+    </button>
+
+    <div class="auth-footer">
+      No account? <a routerLink="/register">Register here</a>
+    </div>
+  </div>
+</div>

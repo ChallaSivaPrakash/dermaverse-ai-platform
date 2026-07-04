@@ -1,0 +1,92 @@
+.dashboard-page {
+  min-height: calc(100vh - 64px);
+  padding: 40px 32px;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.page-header {
+  margin-bottom: 8px;
+}
+
+.page-title {
+  font-size: 1.5rem;
+  letter-spacing: 0.2em;
+  margin-bottom: 4px;
+}
+
+.page-sub {
+  color: #7a8aa0;
+  font-size: 0.875rem;
+}
+
+.section-card {
+  padding: 28px;
+}
+
+.section-heading {
+  font-size: 0.85rem;
+  letter-spacing: 0.2em;
+  margin-bottom: 20px;
+}
+
+.small-btn {
+  padding: 4px 10px;
+  font-size: 0.75rem;
+}
+
+.cart-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 24px;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(0,255,255,0.08);
+}
+
+.cart-total {
+  font-size: 1rem;
+  color: #c0c0c0;
+
+  .neon-text {
+    font-size: 1.2rem;
+    font-family: 'Orbitron', sans-serif;
+    margin-left: 8px;
+  }
+}
+
+.checkout-btn {
+  padding: 12px 28px;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.order-id {
+  font-family: monospace;
+  font-size: 0.85rem;
+  color: #7a8aa0;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #7a8aa0;
+
+  .empty-icon {
+    font-size: 2.5rem;
+    color: rgba(0,255,255,0.15);
+    margin-bottom: 12px;
+  }
+
+  p { font-size: 0.9rem; }
+}

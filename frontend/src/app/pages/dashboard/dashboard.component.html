@@ -1,0 +1,78 @@
+<div class="dashboard-page">
+  <div class="container">
+    <div class="page-header">
+      <h1 class="neon-text page-title">COMMAND CENTER</h1>
+      <p class="page-sub">Your orders and cart</p>
+    </div>
+
+    <!-- Cart Summary -->
+    <section class="glass-card section-card" *ngIf="cart.length > 0 || checkoutSuccess">
+      <h2 class="section-heading neon-text">CART</h2>
+      <div class="alert success" *ngIf="checkoutSuccess">{{ checkoutSuccess }}</div>
+
+      <table class="sci-fi-table" *ngIf="cart.length > 0">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Qty</th>
+            <th>Subtotal</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of cart">
+            <td>{{ item.name }}</td>
+            <td>${{ item.price.toFixed(2) }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>${{ (item.price * item.quantity).toFixed(2) }}</td>
+            <td>
+              <button class="neon-btn danger small-btn" (click)="removeFromCart(item.product_id)">✕</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="cart-footer" *ngIf="cart.length > 0">
+        <div class="cart-total">
+          Total: <span class="neon-text">${{ cartTotal.toFixed(2) }}</span>
+        </div>
+        <button class="neon-btn checkout-btn" (click)="checkout()" [disabled]="checkoutLoading">
+          {{ checkoutLoading ? 'Processing...' : 'Checkout' }}
+        </button>
+      </div>
+    </section>
+
+    <!-- Orders -->
+    <section class="glass-card section-card">
+      <h2 class="section-heading neon-text">ORDER HISTORY</h2>
+
+      <div class="spinner" *ngIf="loading"></div>
+      <div class="alert error" *ngIf="error">{{ error }}</div>
+
+      <div class="empty-state" *ngIf="!loading && orders.length === 0">
+        <div class="empty-icon">◎</div>
+        <p>No orders yet. Go shopping!</p>
+      </div>
+
+      <table class="sci-fi-table" *ngIf="!loading && orders.length > 0">
+        <thead>
+          <tr>
+            <th>Order ID</th>
+            <th>Items</th>
+            <th>Total</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let order of orders">
+            <td class="order-id">{{ order.id | slice:0:8 }}...</td>
+            <td>{{ order.items.length }} item(s)</td>
+            <td>${{ order.total.toFixed(2) }}</td>
+            <td><span class="badge pending">{{ order.status }}</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </div>
+</div>

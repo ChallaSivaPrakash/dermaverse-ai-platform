@@ -1,0 +1,95 @@
+<div class="admin-page">
+  <div class="container">
+    <div class="page-header">
+      <h1 class="neon-text page-title">ADMIN PANEL</h1>
+      <p class="page-sub">Manage products — <span class="warn-text">⚠ Intentional IDOR flaws active for pentesting</span></p>
+    </div>
+
+    <div class="alert success" *ngIf="success">{{ success }}</div>
+    <div class="alert error" *ngIf="error">{{ error }}</div>
+
+    <!-- Add Product Form -->
+    <section class="glass-card section-card">
+      <h2 class="section-heading neon-text">ADD PRODUCT</h2>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Name *</label>
+          <input class="sci-fi-input" [(ngModel)]="newProduct.name" placeholder="Product name" />
+        </div>
+        <div class="form-group">
+          <label>Price *</label>
+          <input class="sci-fi-input" type="number" [(ngModel)]="newProduct.price" placeholder="0.00" />
+        </div>
+        <div class="form-group">
+          <label>Stock</label>
+          <input class="sci-fi-input" type="number" [(ngModel)]="newProduct.stock" placeholder="0" />
+        </div>
+        <div class="form-group">
+          <label>Category</label>
+          <input class="sci-fi-input" [(ngModel)]="newProduct.category" placeholder="Electronics, etc." />
+        </div>
+        <div class="form-group full-span">
+          <label>Description</label>
+          <textarea class="sci-fi-input" [(ngModel)]="newProduct.description" placeholder="Product description..." rows="3"></textarea>
+        </div>
+        <div class="form-group full-span">
+          <label>Image URL</label>
+          <input class="sci-fi-input" [(ngModel)]="newProduct.image_url" placeholder="https://..." />
+        </div>
+      </div>
+      <button class="neon-btn" (click)="addProduct()" [disabled]="addLoading">
+        {{ addLoading ? 'Creating...' : '+ Add Product' }}
+      </button>
+    </section>
+
+    <!-- Products Table -->
+    <section class="glass-card section-card">
+      <h2 class="section-heading neon-text">ALL PRODUCTS</h2>
+      <div class="spinner" *ngIf="loading"></div>
+
+      <div class="empty-state" *ngIf="!loading && products.length === 0">
+        <p>No products yet.</p>
+      </div>
+
+      <div class="table-wrap" *ngIf="!loading && products.length > 0">
+        <table class="sci-fi-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Stock</th>
+              <th>Category</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngFor="let p of products">
+              <!-- Normal row -->
+              <tr *ngIf="editingId !== p.id">
+                <td>{{ p.name }}</td>
+                <td>${{ p.price.toFixed(2) }}</td>
+                <td>{{ p.stock }}</td>
+                <td>{{ p.category || '—' }}</td>
+                <td class="action-cell">
+                  <button class="neon-btn secondary small-btn" (click)="startEdit(p)">Edit</button>
+                  <button class="neon-btn danger small-btn" (click)="deleteProduct(p.id)">Delete</button>
+                </td>
+              </tr>
+              <!-- Inline edit row -->
+              <tr *ngIf="editingId === p.id" class="edit-row">
+                <td><input class="sci-fi-input inline-input" [(ngModel)]="editProduct.name" /></td>
+                <td><input class="sci-fi-input inline-input" type="number" [(ngModel)]="editProduct.price" /></td>
+                <td><input class="sci-fi-input inline-input" type="number" [(ngModel)]="editProduct.stock" /></td>
+                <td><input class="sci-fi-input inline-input" [(ngModel)]="editProduct.category" /></td>
+                <td class="action-cell">
+                  <button class="neon-btn small-btn" (click)="saveEdit(p.id)">Save</button>
+                  <button class="neon-btn secondary small-btn" (click)="cancelEdit()">Cancel</button>
+                </td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+</div>

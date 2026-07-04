@@ -1,0 +1,59 @@
+<div class="home-page">
+  <div class="hero">
+    <div class="hero-content">
+      <h1 class="neon-text hero-title">AGENTIC STORE</h1>
+      <p class="hero-sub">Next-generation commerce, powered by AI</p>
+      <div class="search-wrap">
+        <input
+          class="sci-fi-input search-input"
+          type="text"
+          placeholder="Search products, categories..."
+          [(ngModel)]="search"
+          (ngModelChange)="onSearch()"
+        />
+        <span class="search-icon">⌕</span>
+      </div>
+    </div>
+    <div class="hero-grid-lines"></div>
+  </div>
+
+  <div class="container">
+    <div class="section-header">
+      <h2 class="neon-text section-title">PRODUCTS</h2>
+      <span class="count-badge">{{ filtered.length }} items</span>
+    </div>
+
+    <div class="spinner" *ngIf="loading"></div>
+    <div class="alert error" *ngIf="error">{{ error }}</div>
+
+    <div class="empty-state" *ngIf="!loading && !error && filtered.length === 0">
+      <div class="empty-icon">◎</div>
+      <p>No products found matching "{{ search }}"</p>
+    </div>
+
+    <div class="product-grid" *ngIf="!loading && !error && filtered.length > 0">
+      <div class="glass-card product-card" *ngFor="let p of filtered">
+        <div class="product-image">
+          <img *ngIf="p.image_url" [src]="p.image_url" [alt]="p.name" />
+          <div class="image-placeholder" *ngIf="!p.image_url">
+            <span class="placeholder-icon">◈</span>
+          </div>
+          <div class="category-tag" *ngIf="p.category">{{ p.category }}</div>
+        </div>
+        <div class="product-info">
+          <h3 class="product-name">{{ p.name }}</h3>
+          <p class="product-desc" *ngIf="p.description">{{ p.description | slice:0:80 }}{{ p.description && p.description.length > 80 ? '…' : '' }}</p>
+          <div class="product-footer">
+            <div class="price-stock">
+              <span class="price">${{ p.price.toFixed(2) }}</span>
+              <span class="stock" [class.low]="p.stock < 5">
+                {{ p.stock > 0 ? p.stock + ' in stock' : 'Out of stock' }}
+              </span>
+            </div>
+            <a class="neon-btn view-btn" [routerLink]="['/product', p.id]">View Details</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

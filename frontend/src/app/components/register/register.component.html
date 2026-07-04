@@ -1,0 +1,41 @@
+<div class="auth-page">
+  <div class="auth-card glass-card">
+    <div class="auth-header">
+      <h1 class="neon-text">NEW AGENT</h1>
+      <p>Create your account to get started</p>
+    </div>
+
+    <div class="alert error" *ngIf="error">{{ error }}</div>
+
+    <div class="form-group">
+      <label>Email Address</label>
+      <input
+        class="sci-fi-input"
+        type="email"
+        placeholder="agent@example.com"
+        [(ngModel)]="email"
+        (keyup.enter)="submit()"
+      />
+    </div>
+
+    <div class="form-group">
+      <label>Password</label>
+      <input
+        class="sci-fi-input"
+        type="password"
+        placeholder="Choose a strong password"
+        [(ngModel)]="password"
+        (keyup.enter)="submit()"
+      />
+    </div>
+
+    <button class="neon-btn full-width" (click)="submit()" [disabled]="loading">
+      <span *ngIf="!loading">CREATE ACCOUNT</span>
+      <span *ngIf="loading">CREATING...</span>
+    </button>
+
+    <div class="auth-footer">
+      Already registered? <a routerLink="/login">Login here</a>
+    </div>
+  </div>
+</div>

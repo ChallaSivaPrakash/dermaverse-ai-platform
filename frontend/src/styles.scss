@@ -1,0 +1,204 @@
+/* ========== AGENTIC E-COMMERCE — GLOBAL STYLES ========== */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg-deep:       #0a0e1a;
+  --bg-mid:        #0d1226;
+  --bg-card:       rgba(20, 25, 40, 0.35);
+  --cyan:          #00ffff;
+  --cyan-dim:      rgba(0, 255, 255, 0.15);
+  --cyan-glow:     rgba(0, 255, 255, 0.4);
+  --blue:          #0099ff;
+  --blue-bright:   #00d4ff;
+  --text-primary:  #e0e0e0;
+  --text-muted:    #c0c0c0;
+  --text-dim:      #7a8aa0;
+  --danger:        #ff4466;
+  --success:       #00ff88;
+  --warning:       #ffcc00;
+}
+
+html, body {
+  height: 100%;
+  background-color: var(--bg-deep);
+  color: var(--text-muted);
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ---- Animated starfield background ---- */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(1px 1px at 10% 15%, rgba(0,255,255,0.3) 0%, transparent 100%),
+    radial-gradient(1px 1px at 25% 40%, rgba(255,255,255,0.2) 0%, transparent 100%),
+    radial-gradient(1px 1px at 45% 10%, rgba(0,212,255,0.25) 0%, transparent 100%),
+    radial-gradient(1px 1px at 60% 60%, rgba(255,255,255,0.15) 0%, transparent 100%),
+    radial-gradient(1px 1px at 75% 30%, rgba(0,255,255,0.2) 0%, transparent 100%),
+    radial-gradient(1px 1px at 85% 75%, rgba(255,255,255,0.2) 0%, transparent 100%),
+    radial-gradient(1px 1px at 92% 20%, rgba(0,153,255,0.3) 0%, transparent 100%),
+    radial-gradient(2px 2px at 35% 80%, rgba(0,255,255,0.15) 0%, transparent 100%),
+    radial-gradient(2px 2px at 55% 50%, rgba(0,212,255,0.1) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ---- Glassmorphism card ---- */
+.glass-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--cyan-dim);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* ---- Sci-fi input ---- */
+.sci-fi-input {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(0, 255, 255, 0.3);
+  color: var(--text-primary);
+  border-radius: 8px;
+  padding: 12px;
+  width: 100%;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+
+  &:focus {
+    box-shadow: 0 0 12px var(--cyan-glow);
+    outline: none;
+    border-color: var(--cyan);
+  }
+
+  &::placeholder {
+    color: var(--text-dim);
+  }
+}
+
+/* ---- Neon button ---- */
+.neon-btn {
+  background: linear-gradient(135deg, var(--blue-bright), var(--blue));
+  border: none;
+  color: white;
+  padding: 10px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+  transition: box-shadow 0.2s, transform 0.1s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  &:hover {
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.6);
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &.danger {
+    background: linear-gradient(135deg, #ff4466, #cc2244);
+    &:hover { box-shadow: 0 0 20px rgba(255, 68, 102, 0.5); }
+  }
+
+  &.secondary {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid var(--cyan-dim);
+    &:hover { box-shadow: 0 0 12px var(--cyan-glow); }
+  }
+}
+
+/* ---- Neon text / headers ---- */
+.neon-text {
+  color: var(--cyan);
+  text-shadow: 0 0 8px rgba(0, 255, 255, 0.6);
+  font-family: 'Orbitron', sans-serif;
+}
+
+/* ---- Status badge ---- */
+.badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+
+  &.pending  { background: rgba(255,204,0,0.15);  color: var(--warning); border: 1px solid rgba(255,204,0,0.3); }
+  &.success  { background: rgba(0,255,136,0.1);   color: var(--success); border: 1px solid rgba(0,255,136,0.3); }
+  &.danger   { background: rgba(255,68,102,0.1);  color: var(--danger);  border: 1px solid rgba(255,68,102,0.3); }
+}
+
+/* ---- Table ---- */
+.sci-fi-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th, td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid rgba(0,255,255,0.08);
+    font-size: 0.9rem;
+  }
+
+  th {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    color: var(--cyan);
+    text-transform: uppercase;
+    background: rgba(0,255,255,0.04);
+  }
+
+  tr:hover td {
+    background: rgba(0,255,255,0.03);
+  }
+}
+
+/* ---- Loading spinner ---- */
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(0,255,255,0.1);
+  border-top-color: var(--cyan);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 60px auto;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ---- Error / alert ---- */
+.alert {
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  margin-bottom: 16px;
+
+  &.error   { background: rgba(255,68,102,0.1); border: 1px solid rgba(255,68,102,0.3); color: #ff7799; }
+  &.success { background: rgba(0,255,136,0.1);  border: 1px solid rgba(0,255,136,0.3);  color: #00ff88; }
+}
+
+/* ---- Scrollbar ---- */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-deep); }
+::-webkit-scrollbar-thumb { background: rgba(0,255,255,0.2); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(0,255,255,0.4); }
