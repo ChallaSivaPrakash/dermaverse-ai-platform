@@ -3,88 +3,93 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 
-export interface User {
-  id: string;
-  email: string;
-  role: string;
+// Type Interfaces reflecting the skincare data contracts
+export interface UserSkinUpdate {
+  skin_type?: string;
+  skin_concerns?: string[];
+  prescription_data?: string;
 }
 
-export interface TokenResponse {
-  access_token: string;
-  token_type: string;
-}
-
-export interface Product {
-  id: string;
+export interface ProductPayload {
   name: string;
-  description: string | null;
+  description: string;
   price: number;
   stock: number;
-  category: string | null;
-  image_url: string | null;
-  owner_id: string;
+  category: string;
+  image_url?: string;
+  active_ingredients?: string[];
+  target_skin_types?: string[];
 }
 
-export interface Order {
-  id: string;
-  user_id: string;
-  status: string;
-  total: number;
-  items: { product_id: string; quantity: number; price: number; name: string }[];
+export interface ConsultationRequest {
+  text_query?: string;
+  has_image: boolean;
+  lighting_confirmed: boolean;
+  prescription_text?: string;
 }
 
-@Injectable({ providedIn: 'root' })
+@Injectable({
+  providedIn: 'root'
+})
 export class ApiService {
-  private base = environment.apiUrl;
+  private apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
 
-  private authHeaders(): HttpHeaders {
-    const token = localStorage.getItem('jwt_token');
-    return new HttpHeaders({ Authorization: `Bearer ${token}` });
+  // Helper to fetch the local JWT token for headers
+  private getAuthHeaders(): HttpHeaders {
+    const token = localStorage.getItem('access_token');
+    return new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
   }
 
-  // ---- Auth ----
-  login(email: string, password: string): Observable<TokenResponse> {
-    return this.http.post<TokenResponse>(`${this.base}/auth/login`, { email, password });
+  // --- Auth & User Skin Profile Endpoints ---
+  login(credentials: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/auth/login`, credentials);
   }
 
-  register(email: string, password: string): Observable<User> {
-    return this.http.post<User>(`${this.base}/auth/register`, { email, password });
+  register(user: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/auth/register`, user);
   }
 
-  // ---- Products ----
-  getProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>(`${this.base}/products`);
+  updateSkinProfile(skinData: UserSkinUpdate): Observable<any> {
+    return this.http.put(`${this.apiUrl}/auth/profile/skin`, skinData, {
+      headers: this.getAuthHeaders()
+    });
   }
 
-  getProduct(id: string): Observable<Product> {
-    return this.http.get<Product>(`${this.base}/products/${id}`);
+  // --- Skincare Products CRUD Endpoints ---
+  getProducts(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/products`);
   }
 
-  createProduct(data: Partial<Product>): Observable<Product> {
-    return this.http.post<Product>(`${this.base}/products`, data, { headers: this.authHeaders() });
+  getProduct(id: string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/products/${id}`);
   }
 
-  updateProduct(id: string, data: Partial<Product>): Observable<Product> {
-    return this.http.put<Product>(`${this.base}/products/${id}`, data, { headers: this.authHeaders() });
+  createProduct(product: ProductPayload): Observable<any> {
+    return this.http.post(`${this.apiUrl}/products`, product, {
+      headers: this.getAuthHeaders()
+    });
   }
 
-  deleteProduct(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.base}/products/${id}`, { headers: this.authHeaders() });
+  updateProduct(id: string, product: Partial<ProductPayload>): Observable<any> {
+    return this.http.put(`${this.apiUrl}/products/${id}`, product, {
+      headers: this.getAuthHeaders()
+    });
   }
 
-  // ---- Orders ----
-  createOrder(items: Order['items'], total: number): Observable<Order> {
-    return this.http.post<Order>(`${this.base}/orders`, { items, total }, { headers: this.authHeaders() });
+  deleteProduct(id: string): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/products/${id}`, {
+      headers: this.getAuthHeaders()
+    });
   }
 
-  getMyOrders(): Observable<Order[]> {
-    return this.http.get<Order[]>(`${this.base}/orders/me`, { headers: this.authHeaders() });
-  }
-
-  // ---- AI ----
-  aiAsk(message: string): Observable<{ response: string }> {
-    return this.http.post<{ response: string }>(`${this.base}/ai/ask`, { message }, { headers: this.authHeaders() });
+  // --- AI Dermatological Consultation Endpoint ---
+  askAI(consultation: ConsultationRequest): Observable<any> {
+    return this.http.post(`${this.apiUrl}/ai/ask`, consultation, {
+      headers: this.getAuthHeaders()
+    });
   }
 }
