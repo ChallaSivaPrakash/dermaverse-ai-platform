@@ -1,7 +1,6 @@
 # ⬡ Agentic E-Commerce
 
-A FastAPI + Angular 18 + PostgreSQL e-commerce platform with glassmorphism sci-fi UI.
-Built with **intentional security flaws** for pentesting practice.
+A FastAPI + Angular 18 + PostgreSQL e-commerce platform.
 
 ---
 
